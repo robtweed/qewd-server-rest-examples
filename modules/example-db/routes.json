@@ -1,0 +1,38 @@
+[
+  {
+    "path": "/api/test/:input",
+    "method": "GET",
+    "use": "test_get"
+  },
+  {
+    "path": "/api/test",
+    "method": "POST",
+    "use": "test_post"
+  },
+  {
+    "path": "/api/db/:documentName",
+    "method": "POST",
+    "use": "test_db_post"
+  },
+  {
+    "path": "/api/db/:documentName/list",
+    "method": "GET",
+    "use": "test_db_list"
+  },
+  {
+    "path": "/api/db/:documentName/search",
+    "method": "GET",
+    "use": "test_db_search"
+  },
+  {
+    "path": "/api/db/:documentName/:id",
+    "method": "GET",
+    "use": "test_db_get"
+  },
+  {
+    "path": "/api/db/:documentName/:id",
+    "method": "DELETE",
+    "use": "test_db_delete"
+  }
+]
+

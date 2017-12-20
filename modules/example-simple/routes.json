@@ -1,0 +1,7 @@
+[
+  {
+    "path": "/test/me",
+    "method": "GET",
+    "use": "test"
+  }
+]

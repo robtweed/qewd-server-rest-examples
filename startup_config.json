@@ -1,0 +1,6 @@
+{
+  "managementPassword": "keepThisSecret!",
+  "serverName": "QEWD Server",
+  "port": 8080,
+  "poolSize": 2
+}

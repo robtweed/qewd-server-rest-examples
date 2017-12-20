@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/test",
+    "module": "/opt/qewd/mapped/modules/example-simple",
+    "errors": {
+      "notfound": {
+        "text": "Resource Not Recognised",
+        "statusCode": 404
+      }
+    }
+  },
+  {
+    "path": "/api",
+    "module": "/opt/qewd/mapped/modules/example-db",
+    "errors": {
+      "notfound": {
+        "text": "Resource Not Recognised",
+        "statusCode": 404
+      }
+    }
+  }
+]
