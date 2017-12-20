@@ -41,6 +41,10 @@ or, to run it as a Daemon process:
 
       sudo docker run -d -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped rtweed/qewd-server
 
+Note: the first time you run it, the Docker *qewd-server* Container has to be downloaded.  This will take a 
+couple of minutes.  When you run it again, it will start immediately.
+
+
 Now, using a REST Client (eg PostMan or Advanced Rest Client for Chrome), try the APIs, eg:
 
       http://192.168.1.100:8081/test/me
