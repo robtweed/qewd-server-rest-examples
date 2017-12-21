@@ -110,7 +110,7 @@ decided to use.
 
 You'll see from this repository's example that there are a number of files that *qewd-server* expects to find in the directory from which you run it, and which control its behaviour.
 
-We'll refer to the directory from which you'll run *qewd-server* as the *Dase Directory*.  In our case, the base directory will be *~/myAPIs*.
+We'll refer to the directory from which you'll run *qewd-server* as the *Base Directory*.  In our case, the base directory will be *~/myAPIs*.
 
 The Base Directory files are as follows:
 
@@ -137,7 +137,7 @@ configuration settings you want to use for *qewd-server*.  Again, you just stick
           "poolSize":           {{QEWD worker pool size}}
         }
 
-eg:
+  eg:
 
         {
           "managementPassword": "keepThisSecret!",
@@ -152,7 +152,7 @@ eg:
           "secret": {{Your JWT Secret String}}
         }
 
-eg:
+  eg:
 
         {"secret": "2038dc5e-452c-42f0-8e50-00d03f4ae9ba"}
 
@@ -166,7 +166,7 @@ eg:
           }
         ]
 
-eg:
+  eg:
 
         [
           {
@@ -175,9 +175,9 @@ eg:
           }
         ]
 
-Note that the module path that is used is the one used internally within the *qewd-server* container.
+  Note that the module path that is used is the one used internally within the *qewd-server* container.
 
-You can optionally customise the error response that *qewd-server* returns if an invalid path is entered by the user, eg
+  You can optionally customise the error response that *qewd-server* returns if an invalid path is entered by the user, eg
 
         [
           {
@@ -195,13 +195,13 @@ You can optionally customise the error response that *qewd-server* returns if an
 
 - **install_modules.json** (eg ~/myAPIs/install_modules.json).  This is an optional JSON file that must be defined if your API handler module methods make use of any Node.js modules that are not already used by QEWD itself. The file, if present, must contain an array of module names.
 
-For example, if your handlers require the modules *request* and *traverse*, your *install_modules.json* file would contain the following array
+  For example, if your handlers require the modules *request* and *traverse*, your *install_modules.json* file would contain the following array
 
         ["request", "traverse"]
 
-If your handlers don't require any additional modules, this file need not exist.
+  If your handlers don't require any additional modules, this file need not exist.
 
-If any modules are specified in this file, they are installed automatically each time you start the *qewd-server* Container.  QEWD does not start up until they are installed.
+  If any modules are specified in this file, they are installed automatically each time you start the *qewd-server* Container.  QEWD does not start up until they are installed.
 
 
 ### Your API Handler Module
@@ -274,13 +274,13 @@ and within that, the directory:
           }
         ]
  
-Each route object is defined using 3 properties:
+  Each route object is defined using 3 properties:
 
-- **path**: the API path.  This can define variable path components, eg /test/:a/:b   If a user enterned the path /test/hello/world then the variable *a* would contain the value *hello* and the variable *b* would contain the value *world*.  You'll see how these variables are accessed and handled later.
+  - **path**: the API path.  This can define variable path components, eg /test/:a/:b   If a user enterned the path /test/hello/world then the variable *a* would contain the value *hello* and the variable *b* would contain the value *world*.  You'll see how these variables are accessed and handled later.
 
-- **method**: optionally defines the HTTP method for this route.  If *method* is not defined, the route will be available for all HTTP methods.
+  - **method**: optionally defines the HTTP method for this route.  If *method* is not defined, the route will be available for all HTTP methods.
 
-- **use**: the handler method to be invoked for this route.  This method must exist in the Module's */handlers* sub-folder with the same file name and an extension of .js (eg ~/myAPIs/modules/myTestAPIs/handlers/test.js)
+  - **use**: the handler method to be invoked for this route.  This method must exist in the Module's */handlers* sub-folder with the same file name and an extension of .js (eg ~/myAPIs/modules/myTestAPIs/handlers/test.js)
 
 
 ### Your Module's Handler Methods
