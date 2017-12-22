@@ -96,6 +96,140 @@ You'll see that these APIs include a set of CRUD examples for maintaining, acces
        ~/qewd-server-rest-examples/modules/example-db/db
 
 
+### The Database CRUD Demonstration APIs
+
+Essentially the APIs implement a basic JSON Storage Server, allowing you to save, retrieve, search and delete JSON documents.  The documents can contain any valid JSON - there's no pre-defined schema for the documents.
+
+It's something of a showcase for what's possible with QEWD's persistent JSON storage.
+
+Here's a summary of the APIs - give them a try.
+
+#### Save a JSON document into the database
+
+API:
+
+        POST /api/db/:documentName
+
+        Request body should contain a JSON document
+
+You decide what the Document Name is.  You can have as many separate documents as you like for each of your Document Names.
+
+eg:
+
+        POST /api/db/myDocs
+
+         {
+           "this": {
+             "is": "cool",
+             "works": "great"
+           }
+         }
+
+
+If the JSON is valid (eg double quoted names and values (if strings)), your document will be assigned a numeric Id (starting at 1 and incrementing as you add each new document).
+
+Successful response example:
+
+
+         {
+           "ok": true,
+           "id": 23
+         }
+
+
+#### List the Ids for a given Document Name
+
+This allows you to discover all the Ids for documents you've stored against a particular Document Name
+
+API:
+
+        GET /api/db/:documentName/list
+
+eg:
+
+        GET /api/db/myDocs/list
+
+Returns an array of Id values.
+
+Successful response example:
+
+        [1,2]
+
+
+#### Retrieve a specific JSON document for a specific Document Name
+
+API:
+
+        GET /api/db/:documentName/:id
+
+eg:
+
+        GET /api/db/myDocs/2
+
+        Will retrieve document #2 from the myDocs collection
+
+Successful response example:
+
+        {"this":{"is":"cool","works":"great"}}
+
+
+#### Delete a specific JSON document within a specific Document Name
+
+API:
+
+        DELETE /api/db/:documentName/:id
+
+eg:
+
+        DELETE /api/db/myDocs/2
+
+        Will delete document #2 from the myDocs collection
+
+Successful response example:
+
+        {"ok":true}
+
+
+#### Seaerch within a specific Document Name
+
+When you save a document, index records are automatically created for each leaf-node path.  This API allows you search against these indices.
+
+API:
+
+        GET /api/db/:documentName/search?:path=:value[&:path=value..etc][&showDetail=true]
+
+eg:
+
+        GET /api/db/myDocs/search?this.works=great
+
+        Will return an array of Ids of all documents in the myDocs collection that have a path of *this.works* with a value of *great*
+
+Successful response example:
+
+        ["2"]
+
+If you add *showDetail=true* to the QueryString, it will retrieve the matching document contents too, eg:
+
+        GET /api/db/myDocs/search?this.works=great&showDetail=true
+
+Response:
+
+        {"2":{"this":{"is":"cool","works":"great"}}}
+
+You can specify as many path/value combinations as you like, eg
+
+        GET /api/db/myDocs/search?this.works=great&this.is=cool&showDetail=true
+
+        Response: {"2":{"this":{"is":"cool","works":"great"}}}
+
+but:
+
+        GET /api/db/myDocs/search?this.works=great&this.is=bad&showDetail=true
+
+        Response: {}   // no matches
+
+Feel free to hack the code to enhance the capabilities of this JSON Server.  Most of the information you'll need is already in the example code.  However, to discover the full capabilities of the built-in QEWD database storage see the [QEWD Training Course](http://docs.qewdjs.com/qewd_training.html) and read Parts 17 to 27
+
 
 ## How to set up your own APIs using the Docker *qewd-server* Container
 
