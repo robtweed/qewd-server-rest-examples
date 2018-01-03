@@ -18,6 +18,10 @@ See the Docker documentation, but here's some quick instructions:
       sudo apt-get update
       sudo apt-get install docker.io
 
+### Installing Docker on Raspberry Pi
+
+      curl -sSL https://get.docker.com | sh
+
 
 ## Installing the Example APIs
 
@@ -40,6 +44,10 @@ ie:
 
       docker run -d -p {{external_port}}:8080 -v {{/path/to/qewd-server-rest-examples}}:/opt/qewd/mapped rtweed/qewd-server
 
+If you're using a Raspberry Pi (RPi), use the RPi-specific Docker version (*qewd-server-rpi*), ie:
+
+      docker run -d -p {{external_port}}:8080 -v {{/path/to/qewd-server-rest-examples}}:/opt/qewd/mapped rtweed/qewd-server-rpi
+
 
 ### For example, on Linux
 
@@ -58,6 +66,25 @@ or, to run it as a Daemon process:
 
 Note: the first time you run it, the Docker *qewd-server* Container has to be downloaded.  This will take a 
 couple of minutes.  When you run it again, it will start immediately.
+
+### For example, on a Raspberry Pi
+
+Assuming you were:
+
+- in your home directory when you ran *git clone*
+- you want to listen on port 8081
+
+To run as a foreground process:
+
+      sudo docker run -it -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped rtweed/qewd-server-rpi
+
+or, to run it as a Daemon process:
+
+      sudo docker run -d -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped rtweed/qewd-server-rpi
+
+Note: the first time you run it, the Docker *qewd-server-rpi* Container has to be downloaded.  This will take a 
+couple of minutes.  When you run it again, it will start immediately.
+
 
 ## Test it out
 
@@ -453,6 +480,15 @@ Some of the most commonly-used args properties are:
 - req.query:   object containing any queryString (additional name/value pair) values
 - req.body:    object containing the request body payload (eg for POST methods)
 - req.headers: HTTP request headers
+
+
+## Data Persistence using *qewd-server* and *qewd-server-rpi*
+
+The *qewd-server* and RPi-specific *qewd-server-rpi* Docker Containers include [YottaDB](https://yottadb.com) as an embedded Document/JSON database.  BY default, any data you save using this module's CRUD APIs
+will be lost when you stop and shut down the Container.
+
+If you want to retain your data permanently on your host machine, follow the instructions that are included
+ with the [yotta-gbldir-files](https://github.com/robtweed/yotta-gbldir-files) repository.
 
 
 ## License
