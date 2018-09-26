@@ -1,10 +1,9 @@
 /*
 
  ----------------------------------------------------------------------------
- | qewd-server-rest-examples:                                               |
- |     A basic set of REST APIs to test on your Docker qewd-server          |
+ | NodeM / YottaDB Speed Test                                               |
  |                                                                          |
- | Copyright (c) 2017-18 M/Gateway Developments Ltd,                        |
+ | Copyright (c) 2018 M/Gateway Developments Ltd,                           |
  | Redhill, Surrey UK.                                                      |
  | All rights reserved.                                                     |
  |                                                                          |
@@ -29,16 +28,42 @@
 
 */
 
-var config = require('./startup_config.json');
-config.jwt = require('./jwt_secret.json');
-var local_routes = require('./local_routes.json');
-
-config.moduleMap = {
-  speedTest: '/opt/qewd/mapped/modules/speedTest'
-};
-
 module.exports = {
-  config: config,
-  routes: local_routes
-};
 
+  handlers: {
+    runTest: function(messageObj, session, send, finished) {
+      var max = messageObj.params.max || 10000;
+
+      var gloName = 'qewdSpeedTest';
+
+      var node = {
+        global: gloName
+      };
+      this.db.kill(node);
+      var start = Date.now();
+
+      for (var i = 0; i < max; i++) {
+        node = {
+          global: gloName,
+          subscripts: [i],
+          data: Date.now()
+        };
+        this.db.set(node);
+      }
+      var finish = Date.now();
+      var elap = (finish - start) / 1000;
+
+      node = {
+        global: gloName
+      };
+      this.db.kill(node);
+
+      finished({
+        no_of_sets: max,
+        elapsed_time: elap,
+        global_nodes_set_per_sec: max/elap
+      });
+    }
+  }
+
+};

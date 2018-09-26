@@ -39,14 +39,15 @@ Start up the Docker *qewd-server* Container:
 
 - mapping its internal port 8080 to the external port you want the host server to listen on
 - mapping the *qewd-server-rest-examples* folder to the Container's /opt/qewd/mapped folder
+- mapping the *qewd-server-rest-examples/www* folder to the Container's /opt/qewd/www folder
 
 ie:
 
-      docker run -d -p {{external_port}}:8080 -v {{/path/to/qewd-server-rest-examples}}:/opt/qewd/mapped rtweed/qewd-server
+      docker run -d -p {{external_port}}:8080 -v {{/path/to/qewd-server-rest-examples}}:/opt/qewd/mapped -v {{/path/to/qewd-server-rest-examples}}/www:/opt/qewd/www rtweed/qewd-server
 
 If you're using a Raspberry Pi (RPi), use the RPi-specific Docker version (*qewd-server-rpi*), ie:
 
-      docker run -d -p {{external_port}}:8080 -v {{/path/to/qewd-server-rest-examples}}:/opt/qewd/mapped rtweed/qewd-server-rpi
+      docker run -d -p {{external_port}}:8080 -v {{/path/to/qewd-server-rest-examples}}:/opt/qewd/mapped -v {{/path/to/qewd-server-rest-examples}}/www:/opt/qewd/www rtweed/qewd-server-rpi
 
 
 ### For example, on Linux
@@ -58,11 +59,11 @@ Assuming you were:
 
 To run as a foreground process:
 
-      sudo docker run -it -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped rtweed/qewd-server
+      sudo docker run -it -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped -v ~/qewd-server-rest-examples/www:/opt/qewd/www rtweed/qewd-server
 
 or, to run it as a Daemon process:
 
-      sudo docker run -d -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped rtweed/qewd-server
+      sudo docker run -d -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped -v ~/qewd-server-rest-examples/www:/opt/qewd/www rtweed/qewd-server
 
 Note: the first time you run it, the Docker *qewd-server* Container has to be downloaded.  This will take a 
 couple of minutes.  When you run it again, it will start immediately.
@@ -76,11 +77,11 @@ Assuming you were:
 
 To run as a foreground process:
 
-      sudo docker run -it -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped rtweed/qewd-server-rpi
+      sudo docker run -it -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped -v ~/qewd-server-rest-examples/www:/opt/qewd/www rtweed/qewd-server-rpi
 
 or, to run it as a Daemon process:
 
-      sudo docker run -d -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped rtweed/qewd-server-rpi
+      sudo docker run -d -p 8081:8080 -v ~/qewd-server-rest-examples:/opt/qewd/mapped -v ~/qewd-server-rest-examples/www:/opt/qewd/www rtweed/qewd-server-rpi
 
 Note: the first time you run it, the Docker *qewd-server-rpi* Container has to be downloaded.  This will take a 
 couple of minutes.  When you run it again, it will start immediately.
@@ -256,6 +257,27 @@ but:
         Response: {}   // no matches
 
 Feel free to hack the code to enhance the capabilities of this JSON Server.  Most of the information you'll need is already in the example code.  However, to discover the full capabilities of the built-in QEWD database storage see the [QEWD Training Course](http://docs.qewdjs.com/qewd_training.html) and read Parts 17 to 27
+
+
+## NodeM / YottaDB Speed Test
+
+As a bonus treat, the QEWD Server Examples Container includes a simple little interactive (WebSocket)
+application that allows you to get an idea of the performance of the YottaDB database, accessed via 
+the Node.js NodeM interface.
+
+Once you have started the Container, point your browser at:
+
+      *http://192.168.1.100:8081/speedTest.index.html*
+
+      Note: change the IP address and port to match that used by your Container
+
+Click the button and it will send a message to one of the QEWD Worker processes which will
+run a loop, setting nodes in a Global Storage document.  By default it will set 100,000 nodes. 
+You can change the number of nodes to set by changing the value in the form field.
+
+If you're interested, you can 
+view the source code of the back-end message handler that actually performs this test 
+at *~/qewd-server-rest-examples/modules/speedTest.js*
 
 
 ## How to set up your own APIs using the Docker *qewd-server* Container

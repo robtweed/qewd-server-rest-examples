@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title id="NodeM / YottaDB Speed Test"></title>
+  </head>
+  <body>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="ewd-client.js"></script>
+    <script>
+ 
+      function runTest() {
+        var max = document.getElementById('noOfSets').value;
+        var message = {
+          type: 'runTest',
+          params: {
+            max: max
+          }
+        };
+        document.getElementById('results').innerText = 'Please wait...';
+        EWD.send(message, function(responseObj) {
+          document.getElementById('results').innerText = JSON.stringify(responseObj.message, null, 2);
+        });
+        
+      }
+
+      var qewd = {
+        //io_path: '/qewd_conductor'
+      };
+
+      $(document).ready(function() {
+        EWD.log = true;
+        EWD.start('speedTest', null, io);
+      });
+
+    </script>
+
+
+    <div>
+       <h2>NodeM / YottaDB Speed Test</h2>
+       <div>
+         Number of Global Sets: 
+         <input type="number" id="noOfSets" value="100000" />
+       </div>
+      <p>
+        <button onClick='runTest()'>Run NodeM / YottaDB Speed Test</button>
+      </p>
+
+      <div id="results"></div>
+    </div>
+
+  </body>
+</html>
