@@ -267,9 +267,9 @@ the Node.js NodeM interface.
 
 Once you have started the Container, point your browser at:
 
-      *http://192.168.1.100:8081/speedTest.index.html*
+      http://192.168.1.100:8081/speedTest.index.html
 
-      Note: change the IP address and port to match that used by your Container
+*Note: change the IP address and port to match that used by your Container*
 
 Click the button and it will send a message to one of the QEWD Worker processes which will
 run a loop, setting nodes in a Global Storage document.  By default it will set 100,000 nodes. 
