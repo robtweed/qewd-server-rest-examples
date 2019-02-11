@@ -1,7 +1,7 @@
 # qewd-server-example: A basic set of REST APIs to test on your Docker qewd-server
  
 Rob Tweed <rtweed@mgateway.com>  
-20 December 2017, M/Gateway Developments Ltd [http://www.mgateway.com](http://www.mgateway.com)  
+21 December 2017, M/Gateway Developments Ltd [http://www.mgateway.com](http://www.mgateway.com)  
 
 Twitter: @rtweed
 
