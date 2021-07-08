@@ -22,6 +22,12 @@ See the Docker documentation, but here's some quick instructions:
 
       curl -sSL https://get.docker.com | sh
 
+## Install the qewd-server docker container
+
+Run the docker command to install the qewd-server docker container
+
+docker pull rtweed/qewd-server
+
 
 ## Installing the Example APIs
 
